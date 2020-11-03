@@ -1,0 +1,29 @@
+<script>
+    if(typeof(Spurit) === 'undefined'){
+        var Spurit = {};
+    }
+    if(!Spurit.recurringInvoices){
+        Spurit.recurringInvoices = {};
+    }
+    if(!Spurit.recurringInvoices.snippet){
+        Spurit.recurringInvoices.snippet = {};
+    }
+    Spurit.recurringInvoices.snippet.appId = '46';
+    Spurit.recurringInvoices.snippet.shopHash = '8d7777c5dd55f73e6f0bc2105a5a9cd9';
+    Spurit.recurringInvoices.snippet.shopDomain = 'muvezfootwear.myshopify.com';
+    Spurit.recurringInvoices.snippet.folderStore = 'https://cdn-spurit.com/shopify-apps/recurring-invoices/store/';
+    Spurit.recurringInvoices.snippet.folderCss = 'https://cdn-spurit.com/shopify-apps/recurring-invoices/';
+    Spurit.recurringInvoices.snippet.cdnHostPath = 'https://cdn-spurit.com/';
+    Spurit.recurringInvoices.snippet.cdnJsLibsPath = 'https://cdn-spurit.com/all-apps/';
+    Spurit.recurringInvoices.snippet.moneyFormat = '{{ shop.money_format }}';
+
+    if(typeof(Spurit.globalSnippet) === 'undefined'){
+        Spurit.globalSnippet = {
+            shop_currency: '{{ shop.currency }}',
+            money_format: '{{ shop.money_format }}',
+            cart: {{ cart | json }},
+            customer_id: '{{ customer.id }}'
+        };
+    }
+</script>
+<script src="https://cdn-spurit.com/shopify-apps/recurring-invoices/common.js"></script>
