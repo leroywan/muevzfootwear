@@ -1,18 +1,18 @@
-<!-- {% render 'shogun-products', content: product %} -->
+{% render 'shogun-products', content: product %}
 
 <!-- spurit_sri-added -->
 {% render 'spurit_sri-product-snippet' %}
 <!-- /spurit_sri-added -->
-<!-- {% include 'elspw_product' %}
-{% include 'shogun-products', content: product %}
-{{product.metafields.shogun.above}} -->
-{% section 'product-template' %}
+{% include 'elspw_product' %}
+<!-- {% include 'shogun-products', content: product %} -->
+<!-- {{product.metafields.shogun.above}} -->
+{% section 'product-muvez-template' %}
 {% section 'product-recommendations' %}
 {% section 'recently-viewed-products' %}
 
 <!-- {{product.metafields.shogun.below}} -->
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
   var _learnq = _learnq || [];
 
   var item = {
@@ -46,4 +46,4 @@
   document.querySelector('.ProductForm__AddToCart').addEventListener('click',function (){
     _learnq.push(['track', 'Added to Cart', item]);
   });
-</script>
+</script> -->
