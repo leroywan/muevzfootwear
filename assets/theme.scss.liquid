@@ -2644,6 +2644,24 @@ body:not(.is-tabbing) .flickity-enabled:focus {
   }
 }
 
+.Carousel--Colours {
+  .carousel-cell {
+    padding: 8px;
+  }
+  .flickity-prev-next-button {
+    top: 50%;
+    transform: translateY(-50%) scale(0.6);
+
+    &.next {
+      right: 8px;
+    }
+
+    &.previous {
+      left: 8px;
+    }
+  }
+}
+
 @include av-mq('lap-and-up') {
   .Carousel--insideDots {
     .flickity-page-dots {
@@ -3449,6 +3467,8 @@ select::-ms-expand {
 .HorizontalList--spacingExtraTight .HorizontalList__Item {
   margin-right: 4px;
   margin-left: 4px;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 
 .HorizontalList--spacingTight {
@@ -4154,6 +4174,14 @@ select::-ms-expand {
   height: 36px;
 }
 
+.ColorSwatch--muvez {
+  width: 100px;
+  height: 70px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 .ColorSwatch--white {
   outline: 1px solid $border-color;
   outline-offset: -1px;
@@ -4216,6 +4244,35 @@ select::-ms-expand {
 .SizeSwatchList__Secondary-Size {
   color: $text-color-light;
   font-size: 0.8rem;
+}
+
+.GenderList {
+  display: flex;
+  justify-content: space-between;
+}
+
+.GenderList__Item {
+  list-style: none;
+  flex-basis: calc(50% - 4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.GenderList__Item-Select {
+  border: 1px solid $border-color;
+  padding: 22px 8px;
+  text-align: center;
+  width: 100%;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+
+.SizeSwatch.is-active::after,
+.SizeSwatch__Radio:checked + .SizeSwatch.GenderList__Item-Select {
+  background-color: $button-background;
+  color: $button-text-color;
 }
 
 /**
