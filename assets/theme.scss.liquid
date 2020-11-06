@@ -4226,24 +4226,46 @@ select::-ms-expand {
   display: none;
 }
 
-.SizeSwatch.is-active::after,
-.SizeSwatch__Radio:checked + .SizeSwatch {
-  border-color: $text-color;
-  color: $text-color;
-}
-
 .SizeSwatch--Muvez {
   border-radius: 4px;
-  padding: 4px 24px;
+  padding: 4px 8px;
+  width: 100%;
+}
+
+.SizeSwatchList {
+  display: grid;
+  margin: 0;
+  grid-gap: 4px;
+  grid-template-columns: repeat(4, 1fr);
+
+  @include av-mq('desk') {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+.SizeSwatchList__Item {
+  margin: 0;
+}
+
+.SizeSwatch__Radio:checked+.SizeSwatch {
+  background-color: $button-background;
 }
 
 .SizeSwatchList__Primary-Size {
   color: $text-color;
+
+  .SizeSwatch__Radio:checked+.SizeSwatch & {
+    color: $button-text-color;
+  }
 }
 
 .SizeSwatchList__Secondary-Size {
   color: $text-color-light;
   font-size: 0.8rem;
+
+  .SizeSwatch__Radio:checked+.SizeSwatch & {
+    color: $button-text-color;
+  }
 }
 
 .GenderList {
@@ -9542,7 +9564,7 @@ $vertical-spacing-two-products-per-row  : 0px;
 
 @include av-mq('desk') {
   .Product__Wrapper {
-    max-width: calc(100% - 550px);
+    max-width: calc(100% - 550px - 80px);
   }
 
   .Product--small .Product__Slideshow {
@@ -9929,7 +9951,7 @@ $vertical-spacing-two-products-per-row  : 0px;
 
 @include av-mq('desk') {
   .Product__Info {
-    width: 400px;
+    width: 480px;
   }
 }
 
@@ -10152,7 +10174,7 @@ $vertical-spacing-two-products-per-row  : 0px;
  */
 
 .ProductMeta {
-  text-align: center;
+  text-align: left;
 }
 
 .ProductMeta__ImageWrapper {
@@ -10166,6 +10188,16 @@ $vertical-spacing-two-products-per-row  : 0px;
 
 .ProductMeta__Title {
   margin-bottom: 0;
+  font-weight: 800;
+  color: $heading-color;
+  font-family: $heading-font-family;
+  letter-spacing: 0.2em;
+  font-size: large;
+}
+
+.ProductMeta__Tagline {
+  margin-top: 8px;
+  color: $text-color-light;
 }
 
 .ProductMeta__PriceList {
@@ -10376,7 +10408,6 @@ $vertical-spacing-two-products-per-row  : 0px;
 
 .ProductForm__LabelLink {
   float: right;
-  text-decoration: underline;
   text-underline-position: under;
 }
 

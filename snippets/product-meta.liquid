@@ -12,13 +12,17 @@
     </h2>
   {%- endif -%}
 
-  <h1 class="ProductMeta__Title Heading u-h2">
+  <h1 class="ProductMeta__Title">
     {%- if template.name == 'product' -%}
       {{- product.title -}}
     {%- else -%}
       <a href="{{ product.url }}">{{ product.title }}</a>
     {%- endif -%}
   </h1>
+
+  {%- if product.metafields["global"]["tagline"] != blank -%}
+    <p class="ProductMeta__Tagline Heading u-h6">{{ product.metafields["global"]["tagline"] }}</p>
+  {%- endif -%}
 
   {%- if section.settings.show_sku and product.selected_or_first_available_variant.sku != blank -%}
     <p class="ProductMeta__Sku Heading Text--subdued u-h6">{{ 'product.form.sku' | t }}: <span class="ProductMeta__SkuNumber">{{ product.selected_or_first_available_variant.sku }}</span></p>
