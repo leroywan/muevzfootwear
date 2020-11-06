@@ -11,6 +11,12 @@ for size, we use it to display a size chart (if applicable)
 {%- assign product_popovers = '' -%}
 {%- assign show_option_label = false -%}
 
+{%- assign option_names = '' | split: '' -%}
+{%- for option in product.options_with_values -%}
+  {%- assign option_name = option.name | split: '' -%}
+  {%- assign option_names = option_names | concat: option_name -%}
+{%- endfor -%}
+
 {%- assign selected_variant = product.selected_or_first_available_variant -%}
 
 {%- form 'product', product, class: 'ProductForm' -%}
@@ -84,8 +90,8 @@ for size, we use it to display a size chart (if applicable)
             <ul class="SizeSwatchList HorizontalList HorizontalList--spacingExtraTight">
               {%- for value in option.values -%}
                 <li class="SizeSwatchList__Item">
-                  <input id="option-{{ section.id }}-{{ forloop.parentloop.index0 }}-{{ forloop.index0 }}" class="SizeSwatch__Radio" type="radio" name="option-{{ forloop.parentloop.index0 }}" value="{{ value | escape }}" {% if value == option.selected_value %}checked="checked"{% endif %} data-option-position="{{ option.position }}">
-                  <label for="option-{{ section.id }}-{{ forloop.parentloop.index0 }}-{{ forloop.index0 }}" class="SizeSwatch SizeSwatch--Muvez">
+                  <input id="option-{{ section.id }}-{{ forloop.parentloop.index0 }}-{{ forloop.index0 }}" class="SizeSwatch__Radio SizeSwatch__Radio--Size" type="radio" name="option-{{ forloop.parentloop.index0 }}" value="{{ value | escape }}" {% if value == option.selected_value %}checked="checked"{% endif %} data-option-position="{{ option.position }}">
+                  <label for="option-{{ section.id }}-{{ forloop.parentloop.index0 }}-{{ forloop.index0 }}" class="SizeSwatch SizeSwatch--Muvez" data-value="{{ value }}">
                     {%- assign values = value | split: '|' -%}
                     <div class="SizeSwatchList__Primary-Size">{{ values.first | strip | escape }}</div>
                     {%- if values.size == 2 -%}
@@ -99,8 +105,8 @@ for size, we use it to display a size chart (if applicable)
             <ul class="GenderList">
               {%- for value in option.values -%}
                 <li class="GenderList__Item">
-                  <input id="option-{{ section.id }}-{{ forloop.parentloop.index0 }}-{{ forloop.index0 }}" class="SizeSwatch__Radio" type="radio" name="option-{{ forloop.parentloop.index0 }}" value="{{ value | escape }}" {% if value == option.selected_value %}checked="checked"{% endif %} data-option-position="{{ option.position }}">
-                  <label for="option-{{ section.id }}-{{ forloop.parentloop.index0 }}-{{ forloop.index0 }}" class="SizeSwatch GenderList__Item-Select">
+                  <input id="option-{{ section.id }}-{{ forloop.parentloop.index0 }}-{{ forloop.index0 }}" class="SizeSwatch__Radio SizeSwatch__Radio--Gender" type="radio" name="option-{{ forloop.parentloop.index0 }}" value="{{ value | escape }}" {% if value == option.selected_value %}checked="checked"{% endif %} data-option-position="{{ option.position }}">
+                  <label for="option-{{ section.id }}-{{ forloop.parentloop.index0 }}-{{ forloop.index0 }}" class="SizeSwatch GenderList__Item-Select" data-value="{{ value | escape }}">
                     {{ value | strip | escape }}
                   </label>
                 </li>
@@ -372,3 +378,103 @@ THE EXACT SAME ATTRIBUTES.
     {%- endif -%}
   }
 </script>
+
+{%- unless option_names contains 'Gender' and option_names contains 'Size' -%}
+  <script defer>
+    // Init color as title
+    function changeProductTitle(newTitle) {
+      const title = document.getElementById('muvez-title');
+      title.innerHTML = newTitle;
+    }
+    changeProductTitle(document.querySelector('.ProductForm__SelectedValue').innerHTML);
+
+    function handleGenderChange(selectedElement) {
+      changeProductTitle(selectedElement.innerText)
+      // Get all filtered variants
+      const allVariants = mwProductOptionsObjects.product.variants;
+
+      // Get color value
+      let selectedColor;
+      const colors = document.querySelectorAll('.ColorSwatch__Radio');
+      for (let i=0; i<colors.length; i++) {
+        const color = colors[i];
+        if (color.checked) {
+          selectedColor = color.value;
+        }
+      }
+
+      // Get gender value
+      let selectedGender = selectedElement.dataset.value;
+
+      const filteredVariants = allVariants.filter((variant) => variant.option1 === selectedColor && variant.option2 === selectedGender && variant.available === false);
+
+      // Disable all option3 in the filtered variants
+      document.querySelectorAll(".SizeSwatch--Muvez").forEach((swatch) => {
+        swatch.classList.remove('is-disabled');
+        filteredVariants.forEach((variant) => {
+          if (swatch.dataset.value === variant.option3) {
+            swatch.classList.add('is-disabled');
+          }
+        })
+      })
+
+    }
+
+    function handleColorChange(selectedElement) {
+      changeProductTitle(selectedElement.innerText)
+      // Get all filtered variants
+      const allVariants = mwProductOptionsObjects.product.variants;
+
+      // Get color value
+      let selectedColor = selectedElement.innerText;
+      const colors = document.querySelectorAll('.ColorSwatch__Radio');
+      for (let i=0; i<colors.length; i++) {
+        const color = colors[i];
+        if (color.checked) {
+          selectedColor = selectedElement.innerText || color.value;
+        }
+      }
+
+      // Get gender value
+      let selectedGender;
+      const genders = document.querySelectorAll('.SizeSwatch__Radio--Gender');
+      for (let i=0; i<genders.length; i++) {
+        const gender = genders[i];
+        if (gender.checked) {
+          selectedGender = gender.value;
+        }
+      }
+
+      const filteredVariants = allVariants.filter((variant) => variant.option1 === selectedColor && variant.option2 === selectedGender && variant.available === false);
+
+      // Disable all option3 in the filtered variants
+      document.querySelectorAll(".SizeSwatch--Muvez").forEach((swatch) => {
+        swatch.classList.remove('is-disabled');
+        filteredVariants.forEach((variant) => {
+          if (swatch.dataset.value === variant.option3) {
+            swatch.classList.add('is-disabled');
+          }
+        })
+      })
+
+    }
+
+    const colorSwatches = document.getElementsByClassName('ColorSwatch--muvez');
+    for (let i=0; i<colorSwatches.length; i++) {
+      const colorSwatch = colorSwatches[i];
+
+      colorSwatch.addEventListener('click', function(e) {
+        handleColorChange(e.target);
+      });
+    }
+
+    const genderButtons = document.getElementsByClassName('GenderList__Item-Select');
+    for (let i=0; i<genderButtons.length; i++) {
+      const genderButton = genderButtons[i];
+
+      genderButton.addEventListener('click', function(e) {
+        handleGenderChange(e.target);
+      });
+    }
+  </script>
+{%- endunless -%}

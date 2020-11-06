@@ -14,7 +14,8 @@
 
   <h1 class="ProductMeta__Title">
     {%- if template.name == 'product' -%}
-      {{- product.title -}}
+      <!-- {{- product.title -}} -->
+      <span id="muvez-title" style="text-transform: lowercase; letter-spacing: 0;">{{ option.selected_value }}</span>
     {%- else -%}
       <a href="{{ product.url }}">{{ product.title }}</a>
     {%- endif -%}

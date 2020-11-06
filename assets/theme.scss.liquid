@@ -4230,6 +4230,12 @@ select::-ms-expand {
   border-radius: 4px;
   padding: 4px 8px;
   width: 100%;
+
+  &.is-disabled {
+    cursor: initial;
+    opacity: 0.35;
+    pointer-events: none;
+  }
 }
 
 .SizeSwatchList {
@@ -9578,7 +9584,7 @@ $vertical-spacing-two-products-per-row  : 0px;
 
 @include av-mq('widescreen') {
   .Product__Wrapper {
-    max-width: calc(100% - 500px);
+    max-width: calc(100% - 500px - 80px);
   }
 }
 
