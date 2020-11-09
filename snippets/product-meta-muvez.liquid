@@ -12,19 +12,24 @@
     </h2>
   {%- endif -%}
 
-  <h1 class="ProductMeta__Title Heading u-h2">
+  <h1 class="ProductMeta__Title">
     {%- if template.name == 'product' -%}
-      {{- product.title -}}
+      <!-- {{- product.title -}} -->
+      <span id="muvez-title" style="text-transform: lowercase; letter-spacing: 0;">{{ option.selected_value }}</span>
     {%- else -%}
       <a href="{{ product.url }}">{{ product.title }}</a>
     {%- endif -%}
   </h1>
 
+  {%- if product.metafields["global"]["tagline"] != blank -%}
+    <p class="ProductMeta__Tagline Heading u-h6">{{ product.metafields["global"]["tagline"] }}</p>
+  {%- endif -%}
+
   {%- if section.settings.show_sku and product.selected_or_first_available_variant.sku != blank -%}
     <p class="ProductMeta__Sku Heading Text--subdued u-h6">{{ 'product.form.sku' | t }}: <span class="ProductMeta__SkuNumber">{{ product.selected_or_first_available_variant.sku }}</span></p>
   {%- endif -%}
 
-  {%- if product.template_suffix != 'coming-soon' -%}
+{%- if product.template_suffix != 'coming-soon' -%}
     <div class="ProductMeta__PriceList Heading">
       {%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%}
         <span class="ProductMeta__Price Price Price--highlight Text--subdued u-h4" data-money-convertible>{{ product.selected_or_first_available_variant.price | money_without_trailing_zeros }}</span>
@@ -32,6 +37,7 @@
       {%- else -%}
         <span class="ProductMeta__Price Price Text--subdued u-h4" data-money-convertible>{{ product.selected_or_first_available_variant.price | money_without_trailing_zeros }}</span>
       {%- endif -%}
+      {% include 'judgeme_widgets', widget_type: 'judgeme_preview_badge', jm_style: '', concierge_install: true %}
     </div>
   {%- endif -%}
 

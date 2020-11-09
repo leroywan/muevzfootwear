@@ -4206,6 +4206,7 @@ select::-ms-expand {
   padding-bottom: 12px;
 }
 
+
 /**
  * ----------------------------------------------------------------------------
  * Size swatch
@@ -12279,5 +12280,24 @@ $vertical-spacing-two-products-per-row  : 0px;
 
   .jdgm-prev-badge__text {
     display: none !important;
+  }
+}
+
+.muvez-product-icons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 16px;
+  margin: 16px 0px;
+}
+
+.muvez-product-icon {
+  width: 100%;
+  position: relative;
+  padding: 16px;
+
+  & > img {
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
   }
 }
