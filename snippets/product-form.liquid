@@ -389,7 +389,6 @@ THE EXACT SAME ATTRIBUTES.
     changeProductTitle(document.querySelector('.ProductForm__SelectedValue').innerHTML);
 
     function handleGenderChange(selectedElement) {
-      changeProductTitle(selectedElement.innerText)
       // Get all filtered variants
       const allVariants = mwProductOptionsObjects.product.variants;
 
@@ -476,5 +475,8 @@ THE EXACT SAME ATTRIBUTES.
         handleGenderChange(e.target);
       });
     }
+    setTimeout(function() {
+      handleColorChange(document.querySelector('.ColorSwatch__Radio:checked + .ColorSwatch--muvez'));
+    }, 250)
   </script>
 {%- endunless -%}
